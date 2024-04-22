@@ -1,0 +1,44 @@
+services:
+  y.frontend.dev:
+    image: node:alpine
+    command: sh -c "cd /app && npm install --force && npm run dev"
+    volumes:
+      - ./frontend:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - y.backend.dev
+    networks:
+      - y
+  y.backend.dev:
+    image: golang:latest
+    command: sh -c "cd /app && go run ./cmd"
+    develop:
+      watch:
+        - action: rebuild
+          path: ./backend
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - y.db
+    networks:
+      - y
+  y.db:
+    image: postgres
+    shm_size: 128mb
+    volumes:
+      - db:/dev/shm
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: y
+    ports:
+      - 5432:5432
+    networks:
+      - y
+networks:
+  y:
+    driver: bridge
+volumes:
+  db:
+    driver: local

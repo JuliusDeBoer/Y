@@ -1,0 +1,38 @@
+services:
+  y.frontend.prod:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - y.backend.prod
+    networks:
+      - y
+  y.backend.prod:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - y.db
+    networks:
+      - y
+  y.db:
+    image: postgres
+    shm_size: 128mb
+    volumes:
+      - db:/dev/shm
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: y
+    ports:
+      - 5432:5432
+    networks:
+      - y
+networks:
+  y:
+    driver: bridge
+volumes:
+  db:
+    driver: local
