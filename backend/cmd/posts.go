@@ -11,6 +11,6 @@ import (
 
 func setupPosts(e *echo.Echo, db *gorm.DB, prefix string) {
 	e.GET(prefix, func(c echo.Context) error {
-		return c.String(http.StatusOK, "Much posts")
+		return c.String(http.StatusOK, "Much posts. Such API")
 	})
 }

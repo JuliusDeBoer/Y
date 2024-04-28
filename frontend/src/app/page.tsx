@@ -1,5 +1,9 @@
 export default function Index() {
   return (
-		<h1>Much content</h1>
+		<h1>
+			Much content,
+			<br />
+			Such website
+		</h1>
 	);
 }

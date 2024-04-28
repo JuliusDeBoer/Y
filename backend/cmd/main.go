@@ -26,12 +26,13 @@ func setupDb() *gorm.DB {
 		if err != nil {
 			i--
 
-			msg := fmt.Sprintf("ERROR: Could not connect to database. Retrying... %d (tries left)", i)
-			fmt.Println(msg)
+			fmt.Printf("ERROR: Could not connect to database. Retrying... %d (tries left)", i)
 
 			time.Sleep(3 * time.Second)
 			continue
 		}
+
+		fmt.Println("Connected to database")
 
 		return tmpDb
 	}
@@ -47,6 +48,8 @@ func main() {
 	prefix := "v1"
 
 	setupPosts(e, db, prefix + "/posts")
+
+	fmt.Println("Everything is set! Lets roll")
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

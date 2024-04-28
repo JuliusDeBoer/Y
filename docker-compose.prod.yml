@@ -3,31 +3,25 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      target: prod
+      args:
+        API_URL: "http://y.backend.prod:1323"
     ports:
-      - 3000:3000
+      - 80:80
     depends_on:
       - y.backend.prod
     networks:
       - y
-  y.backend.prod:
+  y.backend.dev:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
-    depends_on:
-      - y.db
-    networks:
-      - y
-  y.db:
-    image: postgres
-    shm_size: 128mb
+      context: ./pb
+      dockerfile: dockerfile
     volumes:
-      - db:/dev/shm
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: y
+      - ./pb/pb_data:/pb/pb_data
+      - ./pb/pb_migrations:/pb/pb_migrations
+      - ./pb/pb_hooks:/pb/pb_hooks
     ports:
-      - 5432:5432
+      - 8080:8080
     networks:
       - y
 networks:

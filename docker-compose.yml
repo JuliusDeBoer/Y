@@ -1,7 +1,11 @@
 services:
   y.frontend.dev:
-    image: node:alpine
-    command: sh -c "cd /app && npm install --force && npm run dev"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev
+      args:
+        API_URL: "http://y.backend.dev:1323"
     volumes:
       - ./frontend:/app
     ports:
@@ -11,34 +15,17 @@ services:
     networks:
       - y
   y.backend.dev:
-    image: golang:latest
-    command: sh -c "cd /app && go run ./cmd"
-    develop:
-      watch:
-        - action: rebuild
-          path: ./backend
+    build:
+      context: ./pb
+      dockerfile: dockerfile
     volumes:
-      - ./backend:/app
-    depends_on:
-      - y.db
-    networks:
-      - y
-  y.db:
-    image: postgres
-    shm_size: 128mb
-    volumes:
-      - db:/dev/shm
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: y
+      - ./pb/pb_data:/pb/pb_data
+      - ./pb/pb_migrations:/pb/pb_migrations
+      - ./pb/pb_hooks:/pb/pb_hooks
     ports:
-      - 5432:5432
+      - 8080:8080
     networks:
       - y
 networks:
   y:
     driver: bridge
-volumes:
-  db:
-    driver: local
