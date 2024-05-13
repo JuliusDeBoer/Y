@@ -5,14 +5,14 @@ services:
       dockerfile: Dockerfile
       target: prod
       args:
-        API_URL: "http://y.backend.prod:1323"
+        API_URL: "http://localhost:8080"
     ports:
       - 80:80
     depends_on:
       - y.backend.prod
     networks:
       - y
-  y.backend.dev:
+  y.backend.prod:
     build:
       context: ./pb
       dockerfile: dockerfile
