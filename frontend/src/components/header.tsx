@@ -7,12 +7,10 @@ export default function Header() {
   const profile = getProfile()!;
   const navigate = useNavigate();
 
-
-	function logoutAndReload() {
-		logout();
-		navigate({ to: "/login" });
-	}
-
+  function logoutAndReload() {
+    logout();
+    navigate({ to: "/login" });
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }} className="h-auto">

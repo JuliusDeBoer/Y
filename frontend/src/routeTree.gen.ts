@@ -13,7 +13,8 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ProfileNameImport } from './routes/profile/$name'
+import { Route as ProfileNameIndexImport } from './routes/profile/$name/index'
+import { Route as ProfileNameSettingsImport } from './routes/profile/$name/settings'
 
 // Create Virtual Routes
 
@@ -44,8 +45,13 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const ProfileNameRoute = ProfileNameImport.update({
-  path: '/profile/$name',
+const ProfileNameIndexRoute = ProfileNameIndexImport.update({
+  path: '/profile/$name/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProfileNameSettingsRoute = ProfileNameSettingsImport.update({
+  path: '/profile/$name/settings',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -54,23 +60,45 @@ const ProfileNameRoute = ProfileNameImport.update({
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
     '/feed': {
+      id: '/feed'
+      path: '/feed'
+      fullPath: '/feed'
       preLoaderRoute: typeof FeedLazyImport
       parentRoute: typeof rootRoute
     }
     '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
       preLoaderRoute: typeof LoginLazyImport
       parentRoute: typeof rootRoute
     }
     '/sign-up': {
+      id: '/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
       preLoaderRoute: typeof SignUpLazyImport
       parentRoute: typeof rootRoute
     }
-    '/profile/$name': {
-      preLoaderRoute: typeof ProfileNameImport
+    '/profile/$name/settings': {
+      id: '/profile/$name/settings'
+      path: '/profile/$name/settings'
+      fullPath: '/profile/$name/settings'
+      preLoaderRoute: typeof ProfileNameSettingsImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile/$name/': {
+      id: '/profile/$name/'
+      path: '/profile/$name/'
+      fullPath: '/profile/$name/'
+      preLoaderRoute: typeof ProfileNameIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -78,12 +106,13 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([
+export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   FeedLazyRoute,
   LoginLazyRoute,
   SignUpLazyRoute,
-  ProfileNameRoute,
-])
+  ProfileNameSettingsRoute,
+  ProfileNameIndexRoute,
+})
 
 /* prettier-ignore-end */

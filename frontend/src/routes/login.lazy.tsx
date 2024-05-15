@@ -1,10 +1,6 @@
-import { CardHeader, TextField, Link as MatLink } from "@mui/material";
+import { CardHeader, TextField, Link as MatLink, Alert } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import {
-  Link,
-  createLazyFileRoute,
-  useNavigate,
-} from "@tanstack/react-router";
+import { Link, createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { HTMLInputTypeAttribute, useState } from "react";
 import cameraman from "@/assets/cameraman.png";
@@ -12,6 +8,7 @@ import { login } from "@/services/pocketbase";
 import { FieldApi, useForm } from "@tanstack/react-form";
 import { valibotValidator } from "@tanstack/valibot-form-adapter";
 import * as v from "valibot";
+import { ClientResponseError } from "pocketbase";
 
 export const Route = createLazyFileRoute("/login")({
   component: Login,
@@ -41,6 +38,7 @@ function Field({ field, type }: FieldProps) {
 
 function Form() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(undefined as string | undefined);
   const navigate = useNavigate({ from: "/login" });
 
   const form = useForm({
@@ -52,14 +50,15 @@ function Form() {
     },
     onSubmit: ({ value }) => {
       setLoading(true);
+      setError(undefined);
       login(value.email, value.password)
         .then(() => {
           navigate({
             to: "/feed",
           });
         })
-        .catch((e) => {
-          console.debug(e);
+        .catch((e: ClientResponseError) => {
+          setError(e.data.message);
           setLoading(false);
         });
     },
@@ -95,6 +94,13 @@ function Form() {
         </LoadingButton>
       </div>
       <hr className="border-1 border-grey-950 my-4" />
+      {error == undefined ? (
+        <></>
+      ) : (
+        <Alert variant="outlined" severity="error">
+          {error}
+        </Alert>
+      )}
       <p>
         Dont have an account?{" "}
         <MatLink component={Link} to="/sign-up">

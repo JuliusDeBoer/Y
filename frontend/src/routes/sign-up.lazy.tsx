@@ -1,6 +1,6 @@
-import { CardHeader, TextField, Link as MatLink } from "@mui/material";
+import { CardHeader, TextField, Link as MatLink, Alert } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Link, createLazyFileRoute } from "@tanstack/react-router";
+import { Link, createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { HTMLInputTypeAttribute, useState } from "react";
 import cameraman from "@/assets/cameraman.png";
@@ -8,6 +8,7 @@ import { signUp } from "@/services/pocketbase";
 import { FieldApi, useForm } from "@tanstack/react-form";
 import { valibotValidator } from "@tanstack/valibot-form-adapter";
 import * as v from "valibot";
+import { ClientResponseError } from "pocketbase";
 
 export const Route = createLazyFileRoute("/sign-up")({
   component: SignUp,
@@ -37,6 +38,8 @@ function Field({ field, type }: FieldProps) {
 
 function Form() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(undefined as string | undefined);
+  const navigate = useNavigate({ from: "/sign-up" });
 
   const form = useForm({
     validatorAdapter: valibotValidator,
@@ -47,8 +50,18 @@ function Form() {
     },
     onSubmit: async ({ value }) => {
       setLoading(true);
-      await signUp(value.username, value.email, value.password);
-      setLoading(false);
+      signUp(value.username, value.email, value.password)
+        .then(() => {
+          navigate({
+            to: "/feed",
+          });
+        })
+        .catch((e: ClientResponseError) => {
+          const err =
+            e.data.data.username ?? e.data.data.email ?? e.data.data.password;
+          setError(err.message);
+          setLoading(false);
+        });
     },
   });
 
@@ -83,6 +96,13 @@ function Form() {
         }}
         children={(field) => <Field field={field} type="password" />}
       />
+      {error == undefined ? (
+        <></>
+      ) : (
+        <Alert variant="outlined" severity="error">
+          {error}
+        </Alert>
+      )}
       <div className="w-full flex justify-center items-center">
         <LoadingButton loading={loading} variant="contained" type="submit">
           Sign up
