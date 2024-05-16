@@ -100,8 +100,8 @@ declare module '@tanstack/react-router' {
     }
     '/profile/$name/': {
       id: '/profile/$name/'
-      path: '/profile/$name/'
-      fullPath: '/profile/$name/'
+      path: '/profile/$name'
+      fullPath: '/profile/$name'
       preLoaderRoute: typeof ProfileNameIndexImport
       parentRoute: typeof rootRoute
     }

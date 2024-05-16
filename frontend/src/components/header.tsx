@@ -22,7 +22,7 @@ export default function Header() {
           <span className="flex-grow" />
           {isAuthenticated() ? (
             <>
-              <Link to="/profile/$name/" params={{ name: profile.name }}>
+              <Link to="/profile/$name" params={{ name: profile.name }}>
                 {profile.name}
               </Link>
               <Button onClick={logoutAndReload}>Logout</Button>
