@@ -44,7 +44,7 @@ function Profile() {
 		authenticatedUser = undefined;
 	}
 
-  const isOwnProfile = profile.id == authenticatedUser.id ?? -1;
+  const isOwnProfile = profile.id == (authenticatedUser.id ?? -1);
 
   return (
     <div className="container mx-auto py-16">

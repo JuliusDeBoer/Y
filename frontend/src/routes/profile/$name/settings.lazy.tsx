@@ -3,7 +3,9 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { queryClient } from "@/routes/__root";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import Grid from '@mui/material/Unstable_Grid2';
-import { Input, Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
+import { useState } from "react";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 export const Route = createFileRoute("/profile/$name/settings")({
   component: Profile,
@@ -28,6 +30,7 @@ function fetchProfile(params: { name: string }): any {
 
 function Profile() {
   const options = Route.useLoaderData();
+	const [loading, _setLoading] = useState(false);
   const query = useSuspenseQuery(options);
 
   if (query.isError) {
@@ -40,10 +43,18 @@ function Profile() {
   return (
     <div className="container mx-auto py-16">
       Settings page!
-			<Grid container>
-				<Grid xs={6}><Typography>Description</Typography></Grid>
-				<Grid xs={6}><Input aria-label="Demo input" multiline placeholder="Type something…" /></Grid>
-			</Grid>
+			<form>
+				<Grid container>
+					<Grid xs={6}><Typography>Description</Typography></Grid>
+					<Grid xs={6}><TextField multiline label="Description" defaultValue={profile.description} /></Grid>
+
+					<Grid xs={2}>
+						<LoadingButton loading={loading} variant="contained" type="submit">
+							Update
+						</LoadingButton>
+					</Grid>
+				</Grid>
+			</form>
     </div>
   );
 }

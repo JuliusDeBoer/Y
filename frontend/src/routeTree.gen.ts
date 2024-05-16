@@ -13,15 +13,17 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as FeedImport } from './routes/feed'
 import { Route as ProfileNameIndexImport } from './routes/profile/$name/index'
-import { Route as ProfileNameSettingsImport } from './routes/profile/$name/settings'
 
 // Create Virtual Routes
 
 const SignUpLazyImport = createFileRoute('/sign-up')()
 const LoginLazyImport = createFileRoute('/login')()
-const FeedLazyImport = createFileRoute('/feed')()
 const IndexLazyImport = createFileRoute('/')()
+const ProfileNameSettingsLazyImport = createFileRoute(
+  '/profile/$name/settings',
+)()
 
 // Create/Update Routes
 
@@ -35,10 +37,10 @@ const LoginLazyRoute = LoginLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/login.lazy').then((d) => d.Route))
 
-const FeedLazyRoute = FeedLazyImport.update({
+const FeedRoute = FeedImport.update({
   path: '/feed',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/feed.lazy').then((d) => d.Route))
+} as any)
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -50,10 +52,12 @@ const ProfileNameIndexRoute = ProfileNameIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ProfileNameSettingsRoute = ProfileNameSettingsImport.update({
+const ProfileNameSettingsLazyRoute = ProfileNameSettingsLazyImport.update({
   path: '/profile/$name/settings',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() =>
+  import('./routes/profile/$name/settings.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -70,7 +74,7 @@ declare module '@tanstack/react-router' {
       id: '/feed'
       path: '/feed'
       fullPath: '/feed'
-      preLoaderRoute: typeof FeedLazyImport
+      preLoaderRoute: typeof FeedImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -91,7 +95,7 @@ declare module '@tanstack/react-router' {
       id: '/profile/$name/settings'
       path: '/profile/$name/settings'
       fullPath: '/profile/$name/settings'
-      preLoaderRoute: typeof ProfileNameSettingsImport
+      preLoaderRoute: typeof ProfileNameSettingsLazyImport
       parentRoute: typeof rootRoute
     }
     '/profile/$name/': {
@@ -108,10 +112,10 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  FeedLazyRoute,
+  FeedRoute,
   LoginLazyRoute,
   SignUpLazyRoute,
-  ProfileNameSettingsRoute,
+  ProfileNameSettingsLazyRoute,
   ProfileNameIndexRoute,
 })
 

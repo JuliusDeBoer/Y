@@ -122,10 +122,10 @@ function Form() {
 function SignUp() {
   return (
     <Grid container className="h-full">
-      <Grid xs={6}>
+      <Grid xs={0} md={6}>
         <img src={cameraman} className="w-full h-full object-cover" />
       </Grid>
-      <Grid xs={6}>
+      <Grid xs={12} md={6}>
         <Form />
       </Grid>
     </Grid>
