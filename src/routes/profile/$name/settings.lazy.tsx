@@ -38,6 +38,8 @@ function Profile() {
     throw query.error;
   }
 
+	document.title = "Profile settings | Y";
+
   const profile = query.data as any;
 
   return (

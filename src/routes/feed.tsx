@@ -11,6 +11,8 @@ export const Route = createFileRoute("/feed")({
 function Feed() {
   const profile = getProfile();
 
+	document.title = "Your feed | Y";
+
   return (
     <Grid container className="container !mx-auto !mt-16">
       <Grid xs={3}></Grid>

@@ -41,6 +41,8 @@ function Form() {
   const [error, setError] = useState(undefined as string | undefined);
   const navigate = useNavigate({ from: "/sign-up" });
 
+	document.title = "Sign up";
+
   const form = useForm({
     validatorAdapter: valibotValidator,
     defaultValues: {

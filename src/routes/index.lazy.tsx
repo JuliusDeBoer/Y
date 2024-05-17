@@ -12,6 +12,8 @@ function Index() {
     return <Navigate to="/feed" />;
   }
 
+	document.title = "Y";
+
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
       <img src={logo} width="128" />

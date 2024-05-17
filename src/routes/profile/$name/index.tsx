@@ -44,6 +44,8 @@ function Profile() {
 		authenticatedUser = undefined;
 	}
 
+	document.title = `Profile of ${profile.name} | Y`;
+
   const isOwnProfile = profile.id == (authenticatedUser.id ?? -1);
 
   return (

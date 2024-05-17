@@ -22,7 +22,7 @@ const router = createRouter({
   trailingSlash: "never",
   defaultErrorComponent: Error,
   defaultNotFoundComponent: NotFound,
-  defaultPendingComponent: Loading,
+  defaultPendingComponent: Loading
 });
 
 declare module "@tanstack/react-router" {
