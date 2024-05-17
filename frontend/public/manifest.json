@@ -1,12 +1,12 @@
 {
   "name": "Y",
   "short_name": "Y",
-  "theme_color": "#fff",
-  "background_color": "#fff",
+  "theme_color": "#90caf9",
+  "background_color": "#121212",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/login",
   "icons": [
     {
       "src": "pwa-images/icons/icon-72x72.png",
