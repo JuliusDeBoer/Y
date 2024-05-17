@@ -1,7 +1,7 @@
 services:
   y.frontend.prod:
     build:
-      context: ./frontend
+      context: ./
       dockerfile: Dockerfile
       target: prod
       args:
