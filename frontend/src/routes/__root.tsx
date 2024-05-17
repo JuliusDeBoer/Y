@@ -30,7 +30,7 @@ function Root() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <div className="w-full h-screen pt-[64px]">
+        <div className="w-full h-screen">
           <Header />
           <Outlet />
         </div>

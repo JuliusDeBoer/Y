@@ -3,7 +3,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Link, createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { HTMLInputTypeAttribute, useState } from "react";
-import cameraman from "@/assets/cameraman.png";
+import abstract1 from "@/assets/abstract1.jpg";
 import { login } from "@/services/pocketbase";
 import { FieldApi, useForm } from "@tanstack/react-form";
 import { valibotValidator } from "@tanstack/valibot-form-adapter";
@@ -113,11 +113,11 @@ function Form() {
 
 function Login() {
   return (
-    <Grid container className="h-full">
-      <Grid xs={0} md={6}>
-        <img src={cameraman} className="w-full h-full object-cover" />
+    <Grid container className="h-screen">
+      <Grid xs={0} md={8}>
+        <img src={abstract1} className="w-full h-screen object-cover" />
       </Grid>
-      <Grid xs={12} md={6}>
+      <Grid xs={12} md={4}>
         <Form />
       </Grid>
     </Grid>
