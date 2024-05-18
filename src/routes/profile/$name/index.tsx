@@ -1,19 +1,18 @@
 import { getProfile, getProfileByName } from "@/services/pocketbase";
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
-import { queryClient } from "@/routes/__root";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Avatar, IconButton, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
 export const Route = createFileRoute("/profile/$name/")({
   component: Profile,
-  loader: ({ params }) => {
+  loader: ({ params, context }) => {
     const postsQueryOptions = queryOptions({
       queryKey: ["profile"],
       queryFn: () => fetchProfile(params),
     });
 
-    queryClient.ensureQueryData(postsQueryOptions);
+    context.queryClient.ensureQueryData(postsQueryOptions);
     return postsQueryOptions;
   },
 });
@@ -37,14 +36,14 @@ function Profile() {
 
   const profile = query.data as any;
 
-	let authenticatedUser: any;
-	try {
-		authenticatedUser = getProfile();
-	} catch {
-		authenticatedUser = undefined;
-	}
+  let authenticatedUser: any;
+  try {
+    authenticatedUser = getProfile();
+  } catch {
+    authenticatedUser = undefined;
+  }
 
-	document.title = `Profile of ${profile.name} | Y`;
+  document.title = `Profile of ${profile.name} | Y`;
 
   const isOwnProfile = profile.id == (authenticatedUser.id ?? -1);
 

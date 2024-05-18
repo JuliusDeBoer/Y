@@ -1,23 +1,20 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import Header from "@/components/header";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ReactGA from 'react-ga4';
+import Header from "@/components/Header";
+import ReactGA from "react-ga4";
+import { RouterContext } from "@/types/routerContext";
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: Root,
 });
 
-if(import.meta.env.VITE_GA_ID) {
-	ReactGA.initialize(import.meta.env.VITE_GA_ID);
+if (import.meta.env.VITE_GA_ID) {
+  ReactGA.initialize(import.meta.env.VITE_GA_ID);
 } else {
-	console.warn("WARN: VITE_GA_ID was not provided! Not setting up react-ga4");
+  console.warn("WARN: VITE_GA_ID was not provided! Not setting up react-ga4");
 }
-
-// HACK: Dont do this. Or at least move this to a seperate file
-export const queryClient = new QueryClient();
 
 function Root() {
   const darkTheme = createTheme({
@@ -27,7 +24,6 @@ function Root() {
   });
 
   return (
-    <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <div className="w-full h-screen">
@@ -38,6 +34,5 @@ function Root() {
           {import.meta.env.PROD ? <></> : <TanStackRouterDevtools />}
         </Suspense>
       </ThemeProvider>
-    </QueryClientProvider>
   );
 }

@@ -1,10 +1,16 @@
-import { CardHeader, TextField, Link as MatLink, Alert, Typography } from "@mui/material";
+import {
+  CardHeader,
+  TextField,
+  Link as MatLink,
+  Alert,
+  Typography,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Link, createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { HTMLInputTypeAttribute, useState } from "react";
 import abstract1 from "@/assets/abstract1.jpg";
-import { signUp } from "@/services/pocketbase";
+import { login, signUp } from "@/services/pocketbase";
 import { FieldApi, useForm } from "@tanstack/react-form";
 import { valibotValidator } from "@tanstack/valibot-form-adapter";
 import * as v from "valibot";
@@ -41,7 +47,7 @@ function Form() {
   const [error, setError] = useState(undefined as string | undefined);
   const navigate = useNavigate({ from: "/sign-up" });
 
-	document.title = "Sign up";
+  document.title = "Sign up";
 
   const form = useForm({
     validatorAdapter: valibotValidator,
@@ -54,8 +60,10 @@ function Form() {
       setLoading(true);
       signUp(value.username, value.email, value.password)
         .then(() => {
-          navigate({
-            to: "/feed",
+          login(value.email, value.password).then(() => {
+            navigate({
+              to: "/feed",
+            });
           });
         })
         .catch((e: ClientResponseError) => {
@@ -117,7 +125,9 @@ function Form() {
           Login
         </MatLink>
       </p>
-			<Typography variant="caption" className="text-slate-400">Dont worry. I took the time to encrypt passwords!</Typography>
+      <Typography variant="caption" className="text-slate-400">
+        Dont worry. I took the time to encrypt passwords!
+      </Typography>
     </form>
   );
 }

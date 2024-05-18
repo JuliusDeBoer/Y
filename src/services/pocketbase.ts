@@ -1,12 +1,8 @@
+import { Post, User } from "@/types/pocketbase";
 import { redirect } from "@tanstack/react-router";
-import Pocketbase from "pocketbase";
+import Pocketbase, { ListResult } from "pocketbase";
 
 let pb: Pocketbase;
-
-type User = {
-  id: number;
-  name: string;
-};
 
 export async function connect() {
   pb = new Pocketbase(import.meta.env.VITE_API_URL);
@@ -68,4 +64,18 @@ export function getProfile() {
 
 export function getProfileByName(name: string) {
   return pb.collection("users").getFirstListItem(`username="${name}"`);
+}
+
+export function getPosts(
+  page?: number | undefined,
+  perPage?: number | undefined,
+): Promise<ListResult<Post & { expand: { user: User } }>> {
+  return pb.collection<Post>("posts").getList(page, perPage, {
+    expand: "user",
+		sort: "-created"
+  });
+}
+
+export function post(content: string) {
+	return pb.collection<Post>("posts").create({ user: pb.authStore.model?.id, content: content })
 }

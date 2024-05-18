@@ -1,7 +1,12 @@
-import { authBeforeLoad, getProfile } from "@/services/pocketbase";
+import { authBeforeLoad, getPosts, getProfile, post } from "@/services/pocketbase";
 import { createFileRoute } from "@tanstack/react-router";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Avatar, Button, Card, CardContent, TextField } from "@mui/material";
+import { Avatar, Button, Stack, TextField } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import Post from "@/components/Post";
+import { valibotValidator } from "@tanstack/valibot-form-adapter";
+import { useForm } from "@tanstack/react-form";
+import * as v from "valibot";
 
 export const Route = createFileRoute("/feed")({
   beforeLoad: authBeforeLoad,
@@ -10,29 +15,57 @@ export const Route = createFileRoute("/feed")({
 
 function Feed() {
   const profile = getProfile();
+	const query = useQuery({queryKey: ["posts"], queryFn: () => getPosts() });
+  const form = useForm({
+    validatorAdapter: valibotValidator,
+    defaultValues: {
+			content: ""
+    },
+    onSubmit: async ({ value }) => {
+			const newPost = await post(value.content);
+			value.content = "";
+			query.data?.items.unshift({...newPost, ...{ expand: { user: getProfile() } }});
+    },
+  });
 
 	document.title = "Your feed | Y";
 
   return (
     <Grid container className="container !mx-auto !mt-16">
-      <Grid xs={3}></Grid>
-      <Grid xs={6}>
-			{profile == undefined ? <></> : <Card variant="outlined">
-          <CardContent>
+      <Grid sm={3} xs={1}></Grid>
+      <Grid sm={6} xs={10}>
+			{profile == undefined ? <></> : <form
+				onSubmit={(e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					form.handleSubmit();
+				}}
+				>
             <Avatar>{profile.name[0]}</Avatar>
-            <TextField
-              id="filled-multiline-static"
-              label="Why?"
-              multiline
-              rows={4}
-              fullWidth
-            />
-            <br />
-            <Button>Post</Button>
-          </CardContent>
-        </Card> }
+						<form.Field name="content" 
+						validators={{
+							onSubmit: v.string([v.minLength(8, "Message must be at least 8 characters")]),
+						}}
+						>{(field) =>
+							<TextField
+								id="filled-multiline-static"
+								label="Why?"
+								value={field.state.value}
+								onBlur={field.handleBlur}
+								onChange={(e) => field.handleChange(e.target.value)}
+								name={field.name}
+								error={field.state.meta.errors.length >= 1}
+								helperText={field.state.meta.errors[0]}
+								multiline
+								rows={4}
+								fullWidth
+							/>}
+						</form.Field>
+            <Button type="submit">Post</Button>
+        </form>}
+				<Stack>{query.data?.items.map((p) => <Post user={p.expand.user} content={p.content} key={p.id} />)}</Stack>
       </Grid>
-      <Grid xs={3}></Grid>
+      <Grid sm={3} xs={1}></Grid>
     </Grid>
   );
 }

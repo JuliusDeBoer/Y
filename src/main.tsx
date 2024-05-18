@@ -1,9 +1,9 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
-import Error from "@/components/error";
-import NotFound from "@/components/notFound";
-import Loading from "@/components/loading";
+import Error from "@/components/Error";
+import NotFound from "@/components/NotFound";
+import Loading from "@/components/Loading";
 
 import { connect } from "@/services/pocketbase";
 
@@ -13,7 +13,10 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import { routeTree } from "./routeTree.gen";
+import { routeTree } from "@/routeTree.gen";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const router = createRouter({
   routeTree,
@@ -22,7 +25,10 @@ const router = createRouter({
   trailingSlash: "never",
   defaultErrorComponent: Error,
   defaultNotFoundComponent: NotFound,
-  defaultPendingComponent: Loading
+  defaultPendingComponent: Loading,
+	context: {
+		queryClient: queryClient
+	}
 });
 
 declare module "@tanstack/react-router" {
@@ -38,7 +44,9 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <RouterProvider router={router} />
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider router={router} />
+			</QueryClientProvider>
     </StrictMode>,
   );
 }
