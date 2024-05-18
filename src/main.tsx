@@ -26,9 +26,9 @@ const router = createRouter({
   defaultErrorComponent: Error,
   defaultNotFoundComponent: NotFound,
   defaultPendingComponent: Loading,
-	context: {
-		queryClient: queryClient
-	}
+  context: {
+    queryClient: queryClient,
+  },
 });
 
 declare module "@tanstack/react-router" {
@@ -44,9 +44,9 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-			<QueryClientProvider client={queryClient}>
-				<RouterProvider router={router} />
-			</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </StrictMode>,
   );
 }

@@ -72,10 +72,12 @@ export function getPosts(
 ): Promise<ListResult<Post & { expand: { user: User } }>> {
   return pb.collection<Post>("posts").getList(page, perPage, {
     expand: "user",
-		sort: "-created"
+    sort: "-created",
   });
 }
 
 export function post(content: string) {
-	return pb.collection<Post>("posts").create({ user: pb.authStore.model?.id, content: content })
+  return pb
+    .collection<Post>("posts")
+    .create({ user: pb.authStore.model?.id, content: content });
 }

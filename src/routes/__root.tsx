@@ -24,15 +24,15 @@ function Root() {
   });
 
   return (
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <div className="w-full h-screen">
-          <Header />
-          <Outlet />
-        </div>
-        <Suspense>
-          {import.meta.env.PROD ? <></> : <TanStackRouterDevtools />}
-        </Suspense>
-      </ThemeProvider>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <div className="w-full h-screen">
+        <Header />
+        <Outlet />
+      </div>
+      <Suspense>
+        {import.meta.env.PROD ? <></> : <TanStackRouterDevtools />}
+      </Suspense>
+    </ThemeProvider>
   );
 }

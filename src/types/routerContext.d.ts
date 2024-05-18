@@ -1,3 +1,3 @@
 export type RouterContext = {
-	queryClient: QueryClient
+  queryClient: QueryClient;
 };
