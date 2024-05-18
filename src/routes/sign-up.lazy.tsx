@@ -88,7 +88,10 @@ function Form() {
       <form.Field
         name="username"
         validators={{
-          onBlur: v.string([v.minLength(4, "Must be at least 4 characters")]),
+          onBlur: v.string([
+            v.minLength(4, "Must be at least 4 characters"),
+            v.excludes(" ", "Cannot contain spaces"),
+          ]),
         }}
         children={(field) => <Field field={field} type="text" />}
       />
