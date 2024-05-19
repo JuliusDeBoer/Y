@@ -1,18 +1,21 @@
-import { User } from "@/types/pocketbase";
 import { Card, CardContent, Typography } from "@mui/material";
 import UserTitle from "@/components/UserTitle";
+import { Post as PostType, User } from "@/types/pocketbase";
 
 type props = {
-  content: string;
-  user: User;
+	post: PostType
+	user: User
 };
 
-export default function Post({ content, user }: props) {
+export default function Post({ post, user }: props) {
+	const date = new Date(post.created);
+
   return (
-    <Card variant="outlined">
+    <Card variant="elevation">
       <CardContent>
         <UserTitle user={user} />
-        <Typography variant="body1">{content}</Typography>
+        <Typography variant="body1" className="py-3">{post.content}</Typography>
+        <p className="text-slate-500 text-xs">{date.toLocaleString()}</p>
       </CardContent>
     </Card>
   );

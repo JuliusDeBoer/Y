@@ -8,9 +8,10 @@ type props = {
 
 export default function UserTitle({ user }: props) {
   return (
-    <div>
+    <div className="flex items-center">
       <UserAvatar user={user} />
-      <Typography variant="h5">{user.name}</Typography>
+			<span className="px-1" />
+      <Typography variant="h6">{user.name}</Typography>
     </div>
   );
 }

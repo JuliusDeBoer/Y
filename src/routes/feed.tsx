@@ -85,9 +85,9 @@ function Feed() {
             <Button type="submit">Post</Button>
           </form>
         )}
-        <Stack>
+        <Stack spacing={2}>
           {query.data?.items.map((p) => (
-            <Post user={p.expand.user} content={p.content} key={p.id} />
+            <Post user={p.expand.user} post={p} key={p.id} />
           ))}
         </Stack>
       </Grid>
