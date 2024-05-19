@@ -5,6 +5,7 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import Header from "@/components/Header";
 import ReactGA from "react-ga4";
 import { RouterContext } from "@/types/routerContext";
+import { Helmet } from "react-helmet";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: Root,
@@ -25,6 +26,16 @@ function Root() {
 
   return (
     <ThemeProvider theme={darkTheme}>
+      <Helmet>
+        <title>Y</title>
+        <meta
+          name="description"
+          content="The new social media platform that makes you ask: 'why?'"
+        />
+
+        {/* Twitter cards (ironic) */}
+        <meta name="twitter:card" content="summary" />
+      </Helmet>
       <CssBaseline />
       <div className="w-full h-screen">
         <Header />

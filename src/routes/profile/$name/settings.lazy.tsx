@@ -5,6 +5,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { TextField, Typography } from "@mui/material";
 import { useState } from "preact/hooks";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { Helmet } from "react-helmet";
 
 export const Route = createFileRoute("/profile/$name/settings")({
   component: Profile,
@@ -37,33 +38,40 @@ function Profile() {
     throw query.error;
   }
 
-  document.title = "Profile settings | Y";
-
   const profile = query.data as any;
 
   return (
-    <div className="container mx-auto py-16">
-      Settings page!
-      <form>
-        <Grid container>
-          <Grid xs={6}>
-            <Typography>Description</Typography>
-          </Grid>
-          <Grid xs={6}>
-            <TextField
-              multiline
-              label="Description"
-              defaultValue={profile.description}
-            />
-          </Grid>
+    <>
+      <Helmet>
+        <title>Profile settings / Y</title>
+      </Helmet>
+      <div className="container mx-auto py-16">
+        Settings page!
+        <form>
+          <Grid container>
+            <Grid xs={6}>
+              <Typography>Description</Typography>
+            </Grid>
+            <Grid xs={6}>
+              <TextField
+                multiline
+                label="Description"
+                defaultValue={profile.description}
+              />
+            </Grid>
 
-          <Grid xs={2}>
-            <LoadingButton loading={loading} variant="contained" type="submit">
-              Update
-            </LoadingButton>
+            <Grid xs={2}>
+              <LoadingButton
+                loading={loading}
+                variant="contained"
+                type="submit"
+              >
+                Update
+              </LoadingButton>
+            </Grid>
           </Grid>
-        </Grid>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 }

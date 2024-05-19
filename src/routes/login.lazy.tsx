@@ -9,6 +9,7 @@ import { FieldApi, useForm } from "@tanstack/react-form";
 import { valibotValidator } from "@tanstack/valibot-form-adapter";
 import * as v from "valibot";
 import { ClientResponseError } from "pocketbase";
+import { Helmet } from "react-helmet";
 
 export const Route = createLazyFileRoute("/login")({
   component: Login,
@@ -25,7 +26,9 @@ function Field({ field, type }: FieldProps) {
       name={field.name}
       value={field.state.value}
       onBlur={field.handleBlur}
-      onChange={(e) => field.handleChange((e.target as HTMLTextAreaElement).value)}
+      onChange={(e) =>
+        field.handleChange((e.target as HTMLTextAreaElement).value)
+      }
       error={field.state.meta.errors.length >= 1}
       helperText={field.state.meta.errors[0]}
       label={field.name}
@@ -40,8 +43,6 @@ function Form() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(undefined as string | undefined);
   const navigate = useNavigate({ from: "/login" });
-
-  document.title = "Login | Y";
 
   const form = useForm({
     validatorAdapter: valibotValidator,
@@ -67,49 +68,54 @@ function Form() {
   });
 
   return (
-    <form
-      className="h-full flex justify-center items-center flex-col"
-      onSubmit={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        form.handleSubmit();
-      }}
-    >
-      <CardHeader title="Login" />
-      <form.Field
-        name="email"
-        validators={{
-          onBlur: v.string([v.email("Must be a valid email")]),
+    <>
+      <Helmet>
+        <title>Login / Y</title>
+      </Helmet>
+      <form
+        className="h-full flex justify-center items-center flex-col"
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          form.handleSubmit();
         }}
-        children={(field) => <Field field={field} type="email" />}
-      />
-      <form.Field
-        name="password"
-        validators={{
-          onBlur: v.string([v.minLength(8, "Must be at least 8 characters")]),
-        }}
-        children={(field) => <Field field={field} type="password" />}
-      />
-      <div className="w-full flex justify-center items-center">
-        <LoadingButton loading={loading} variant="contained" type="submit">
-          Login
-        </LoadingButton>
-      </div>
-      <hr className="border-1 border-grey-950 my-4" />
-      {error == undefined ? (
-        <></>
-      ) : (
-        <Alert variant="outlined" severity="error">
-          {error}
-        </Alert>
-      )}
-      <p>
-        Dont have an account?{" "}
-        <MatLink component={Link} to="/sign-up">
-          Sign up
-        </MatLink>
-      </p>
-    </form>
+      >
+        <CardHeader title="Login" />
+        <form.Field
+          name="email"
+          validators={{
+            onBlur: v.string([v.email("Must be a valid email")]),
+          }}
+          children={(field) => <Field field={field} type="email" />}
+        />
+        <form.Field
+          name="password"
+          validators={{
+            onBlur: v.string([v.minLength(8, "Must be at least 8 characters")]),
+          }}
+          children={(field) => <Field field={field} type="password" />}
+        />
+        <div className="w-full flex justify-center items-center">
+          <LoadingButton loading={loading} variant="contained" type="submit">
+            Login
+          </LoadingButton>
+        </div>
+        <hr className="border-1 border-grey-950 my-4" />
+        {error == undefined ? (
+          <></>
+        ) : (
+          <Alert variant="outlined" severity="error">
+            {error}
+          </Alert>
+        )}
+        <p>
+          Dont have an account?{" "}
+          <MatLink component={Link} to="/sign-up">
+            Sign up
+          </MatLink>
+        </p>
+      </form>
+    </>
   );
 }
 

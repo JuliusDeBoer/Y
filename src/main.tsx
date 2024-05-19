@@ -40,9 +40,10 @@ connect();
 
 const rootElement = document.getElementById("app")!;
 if (!rootElement.innerHTML) {
-	render(
-		<QueryClientProvider client={queryClient}>
-			<RouterProvider router={router} />
-		</QueryClientProvider>, rootElement
+  render(
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>,
+    rootElement,
   );
 }

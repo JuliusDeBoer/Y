@@ -26,6 +26,7 @@
     "preact": "^10.22.0",
     "preact-jsx-runtime": "^1.2.0",
     "react-ga4": "^2.1.0",
+    "react-helmet": "^6.1.0",
     "valibot": "^0.30.0"
   },
   "devDependencies": {
@@ -33,6 +34,7 @@
     "@tanstack/eslint-plugin-query": "^5.35.6",
     "@tanstack/router-devtools": "^1.32.12",
     "@tanstack/router-vite-plugin": "^1.32.10",
+    "@types/react-helmet": "^6.1.11",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "@typescript-eslint/parser": "^7.9.0",
     "autoprefixer": "^10.4.19",
