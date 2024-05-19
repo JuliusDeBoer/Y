@@ -59,6 +59,10 @@ function Feed() {
               validators={{
                 onSubmit: v.string([
                   v.minLength(8, "Message must be at least 8 characters"),
+                  v.maxLength(
+                    281,
+                    "Message cannot be longer that 281 characters",
+                  ),
                 ]),
               }}
             >
