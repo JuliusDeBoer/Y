@@ -72,7 +72,7 @@ function Feed() {
                   label="Why?"
                   value={field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
+                  onChange={(e) => field.handleChange((e.target as HTMLTextAreaElement).value)}
                   name={field.name}
                   error={field.state.meta.errors.length >= 1}
                   helperText={field.state.meta.errors[0]}

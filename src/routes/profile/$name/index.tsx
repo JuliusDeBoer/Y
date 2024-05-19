@@ -52,9 +52,9 @@ function Profile() {
       <div className="flex items-top">
         <Avatar sx={{ width: 128, height: 128 }}>{profile.name[0]}</Avatar>
         <div>
-          <Typography variant="h4" component="h1">
+          <h3 className="text-2xl">
             {profile.name}
-          </Typography>
+          </h3>
           <Typography variant="body1">
             {profile.description}
             {isOwnProfile ? (

@@ -1,7 +1,6 @@
 import { isAuthenticated } from "@/services/pocketbase";
 import { Navigate, createLazyFileRoute } from "@tanstack/react-router";
 import logo from "@/assets/logo.svg";
-import { Typography } from "@mui/material";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -17,9 +16,9 @@ function Index() {
   return (
     <div className="w-full h-full flex flex-col justify-center items-center container mx-auto">
       <img src={logo} width="128" />
-      <Typography variant="h2" component="h1" className="text-center">
+      <h1 className="text-5xl">
         The new social media platform that makes you ask: "why?"
-      </Typography>
+      </h1>
     </div>
   );
 }

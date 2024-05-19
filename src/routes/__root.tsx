@@ -1,6 +1,6 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
-import { Suspense } from "react";
+import { Suspense } from "preact/compat";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import Header from "@/components/Header";
 import ReactGA from "react-ga4";
@@ -30,7 +30,7 @@ function Root() {
         <Header />
         <Outlet />
       </div>
-      <Suspense>
+      <Suspense fallback={<></>}>
         {import.meta.env.PROD ? <></> : <TanStackRouterDevtools />}
       </Suspense>
     </ThemeProvider>

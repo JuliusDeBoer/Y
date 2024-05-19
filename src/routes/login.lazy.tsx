@@ -2,7 +2,7 @@ import { CardHeader, TextField, Link as MatLink, Alert } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Link, createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { HTMLInputTypeAttribute, useState } from "react";
+import { useState } from "preact/hooks";
 import abstract1 from "@/assets/abstract1.jpg";
 import { login } from "@/services/pocketbase";
 import { FieldApi, useForm } from "@tanstack/react-form";
@@ -16,7 +16,7 @@ export const Route = createLazyFileRoute("/login")({
 
 type FieldProps = {
   field: FieldApi<any, any, any, any>;
-  type?: HTMLInputTypeAttribute;
+  type?: string;
 };
 
 function Field({ field, type }: FieldProps) {
@@ -25,7 +25,7 @@ function Field({ field, type }: FieldProps) {
       name={field.name}
       value={field.state.value}
       onBlur={field.handleBlur}
-      onChange={(e) => field.handleChange(e.target.value)}
+      onChange={(e) => field.handleChange((e.target as HTMLTextAreaElement).value)}
       error={field.state.meta.errors.length >= 1}
       helperText={field.state.meta.errors[0]}
       label={field.name}
