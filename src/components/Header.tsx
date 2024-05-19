@@ -2,6 +2,7 @@ import { getProfile, isAuthenticated, logout } from "@/services/pocketbase";
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import { Link, useNavigate } from "@tanstack/react-router";
 import logo from "@/assets/logo.svg";
+import UserAvatar from "./UserAvatar";
 
 export default function Header() {
   const profile = getProfile()!;
@@ -23,7 +24,7 @@ export default function Header() {
           {isAuthenticated() ? (
             <>
               <Link to="/profile/$name" params={{ name: profile.name }}>
-                {profile.name}
+                <UserAvatar user={profile} />
               </Link>
               <Button onClick={logoutAndReload}>Logout</Button>
             </>

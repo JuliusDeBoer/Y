@@ -6,12 +6,13 @@ import {
 } from "@/services/pocketbase";
 import { createFileRoute } from "@tanstack/react-router";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Avatar, Button, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import Post from "@/components/Post";
 import { valibotValidator } from "@tanstack/valibot-form-adapter";
 import { useForm } from "@tanstack/react-form";
 import * as v from "valibot";
+import UserAvatar from "@/components/UserAvatar";
 
 export const Route = createFileRoute("/feed")({
   beforeLoad: authBeforeLoad,
@@ -52,7 +53,7 @@ function Feed() {
               form.handleSubmit();
             }}
           >
-            <Avatar>{profile.name[0]}</Avatar>
+            <UserAvatar user={profile} />
             <form.Field
               name="content"
               validators={{
