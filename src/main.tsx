@@ -19,8 +19,6 @@ const queryClient = new QueryClient();
 
 const router = createRouter({
   routeTree,
-  defaultPreload: "intent",
-  defaultPreloadDelay: 200,
   trailingSlash: "never",
   defaultErrorComponent: Error,
   defaultNotFoundComponent: NotFound,
