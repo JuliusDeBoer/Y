@@ -32,9 +32,6 @@ function Root() {
           name="description"
           content="The new social media platform that makes you ask: 'why?'"
         />
-
-        {/* Twitter cards (ironic) */}
-        <meta name="twitter:card" content="summary" />
       </Helmet>
       <CssBaseline />
       <div className="w-full h-screen">

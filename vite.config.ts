@@ -6,14 +6,14 @@ import { fileURLToPath } from "url";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-		preact(),
-		TanStackRouterVite({
-			enableRouteGeneration: true,
-			experimental: {
-				enableCodeSplitting: true
-			},
-		})
-	],
+    preact(),
+    TanStackRouterVite({
+      enableRouteGeneration: true,
+      experimental: {
+        enableCodeSplitting: true,
+      },
+    }),
+  ],
   build: {
     sourcemap: true,
   },
