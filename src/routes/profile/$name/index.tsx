@@ -1,20 +1,29 @@
-import { getProfile, getProfileByName } from "@/services/pocketbase";
+import {
+  getPostsOfUser,
+  getProfile,
+  getProfileByName,
+} from "@/services/pocketbase";
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { Avatar, IconButton, Typography } from "@mui/material";
+import {
+  queryOptions,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { Avatar, IconButton, Stack, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { Helmet } from "react-helmet";
+import Post from "@/components/Post";
 
 export const Route = createFileRoute("/profile/$name/")({
   component: Profile,
   loader: ({ params, context }) => {
-    const postsQueryOptions = queryOptions({
+    const loadProfileOptions = queryOptions({
       queryKey: ["profile"],
       queryFn: () => fetchProfile(params),
     });
 
-    context.queryClient.ensureQueryData(postsQueryOptions);
-    return postsQueryOptions;
+    context.queryClient.ensureQueryData(loadProfileOptions);
+    return loadProfileOptions;
   },
 });
 
@@ -36,6 +45,11 @@ function Profile() {
   }
 
   const profile = query.data as any;
+
+  const postsQuery = useQuery({
+    queryKey: ["PostsForUser"],
+    queryFn: () => getPostsOfUser(profile.id),
+  });
 
   let authenticatedUser: any;
   try {
@@ -76,6 +90,13 @@ function Profile() {
             </Typography>
           </div>
         </div>
+        <Stack spacing={2}>
+          {postsQuery.data?.items.map((p) => (
+            <Link to="/post/$id" params={{ id: p.id }}>
+              <Post user={profile} post={p} key={p.id} />
+            </Link>
+          ))}
+        </Stack>
       </div>
     </>
   );

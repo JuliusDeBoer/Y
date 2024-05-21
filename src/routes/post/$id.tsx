@@ -35,13 +35,13 @@ function Post() {
       <Helmet>
         <title>Post of {post.expand.user.name}</title>
       </Helmet>
-			<Grid container className="container !mx-auto !mt-16">
-				<Grid sm={3} xs={1}></Grid>
-				<Grid sm={6} xs={10}>
-					<PostCard user={post.expand.user} post={post} />
-				</Grid>
-				<Grid sm={3} xs={1}></Grid>
-			</Grid>
+      <Grid container className="container !mx-auto !mt-16">
+        <Grid sm={3} xs={1}></Grid>
+        <Grid sm={6} xs={10}>
+          <PostCard user={post.expand.user} post={post} />
+        </Grid>
+        <Grid sm={3} xs={1}></Grid>
+      </Grid>
     </>
   );
 }
