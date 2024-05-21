@@ -4,7 +4,7 @@ import {
   getProfile,
   post,
 } from "@/services/pocketbase";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Button, Stack, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -94,7 +94,9 @@ function Feed() {
           )}
           <Stack spacing={2}>
             {query.data?.items.map((p) => (
-              <Post user={p.expand.user} post={p} key={p.id} />
+              <Link to="/post/$id" params={{ id: p.id }}>
+                <Post user={p.expand.user} post={p} key={p.id} />
+              </Link>
             ))}
           </Stack>
         </Grid>

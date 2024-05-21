@@ -81,3 +81,9 @@ export function post(content: string) {
     .collection<Post>("posts")
     .create({ user: pb.authStore.model?.id, content: content });
 }
+
+export function getPostById(
+  id: string,
+): Promise<Post & { expand: { user: User } }> {
+  return pb.collection<Post>("posts").getOne(id, { expand: "user" });
+}

@@ -1,3 +1,4 @@
+import "preact/debug";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import Error from "@/components/Error";
 import NotFound from "@/components/NotFound";
