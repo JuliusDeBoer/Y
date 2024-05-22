@@ -24,7 +24,9 @@ export default function Header() {
           {isAuthenticated() ? (
             <>
               <UserAvatar user={profile} />
-              <Button onClick={logoutAndReload}>Logout</Button>
+              <Button onClick={logoutAndReload} color="error">
+                Logout
+              </Button>
             </>
           ) : (
             <Link to="/login">
