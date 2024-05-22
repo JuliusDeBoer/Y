@@ -91,5 +91,7 @@ export function getPostsOfUser(userId: string) {
 export function getPostById(
   id: string,
 ): Promise<Post & { expand: { user: User } }> {
-  return pb.collection<Post>("posts").getOne(id, { expand: "user" });
+  return pb
+    .collection<Post>("posts")
+    .getOne(id, { expand: "user", sort: "-created" });
 }
