@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from "@tanstack/react-router";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Button, Card, CardContent, Stack, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -8,7 +8,12 @@ import { useForm } from "@tanstack/react-form";
 import * as v from "valibot";
 import UserAvatar from "@/components/UserAvatar";
 import { Helmet } from "react-helmet";
-import { authBeforeLoad, getPosts, getProfile, post } from '@/services/pocketbase';
+import {
+  authBeforeLoad,
+  getPosts,
+  getProfile,
+  post,
+} from "@/services/pocketbase";
 
 export const Route = createFileRoute("/feed")({
   beforeLoad: authBeforeLoad,

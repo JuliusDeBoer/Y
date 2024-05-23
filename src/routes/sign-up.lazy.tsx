@@ -2,7 +2,6 @@ import {
   CardHeader,
   TextField,
   Link as MatLink,
-  Alert,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -24,9 +23,10 @@ export const Route = createLazyFileRoute("/sign-up")({
 type FieldProps = {
   field: FieldApi<any, any, any, any>;
   type?: string;
+  error: string | undefined;
 };
 
-function Field({ field, type }: FieldProps) {
+function Field({ field, type, error }: FieldProps) {
   return (
     <TextField
       name={field.name}
@@ -35,8 +35,8 @@ function Field({ field, type }: FieldProps) {
       onChange={(e) =>
         field.handleChange((e.target as HTMLTextAreaElement).value)
       }
-      error={field.state.meta.errors.length >= 1}
-      helperText={field.state.meta.errors[0]}
+      error={field.state.meta.errors.length >= 1 || error != undefined}
+      helperText={field.state.meta.errors[0] || error}
       label={field.name}
       type={type ?? "text"}
       variant="outlined"
@@ -47,7 +47,11 @@ function Field({ field, type }: FieldProps) {
 
 function Form() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(undefined as string | undefined);
+  const [error, setError] = useState(
+    undefined as
+      | { [key: string]: { code: string; message: string } }
+      | undefined,
+  );
   const navigate = useNavigate({ from: "/sign-up" });
 
   const form = useForm({
@@ -68,9 +72,7 @@ function Form() {
           });
         })
         .catch((e: ClientResponseError) => {
-          const err =
-            e.data.data.username ?? e.data.data.email ?? e.data.data.password;
-          setError(err.message);
+          setError(e.data.data);
           setLoading(false);
         });
     },
@@ -98,29 +100,32 @@ function Form() {
               v.excludes(" ", "Cannot contain spaces"),
             ]),
           }}
-          children={(field) => <Field field={field} type="text" />}
+          children={(field) => (
+            <Field field={field} type="text" error={error?.username?.message} />
+          )}
         />
         <form.Field
           name="email"
           validators={{
             onBlur: v.string([v.email("Must be a valid email")]),
           }}
-          children={(field) => <Field field={field} type="email" />}
+          children={(field) => (
+            <Field field={field} type="email" error={error?.email?.message} />
+          )}
         />
         <form.Field
           name="password"
           validators={{
             onBlur: v.string([v.minLength(8, "Must be at least 8 characters")]),
           }}
-          children={(field) => <Field field={field} type="password" />}
+          children={(field) => (
+            <Field
+              field={field}
+              type="password"
+              error={error?.password?.message}
+            />
+          )}
         />
-        {error == undefined ? (
-          <></>
-        ) : (
-          <Alert variant="outlined" severity="error">
-            {error}
-          </Alert>
-        )}
         <div className="w-full flex justify-center items-center">
           <LoadingButton loading={loading} variant="contained" type="submit">
             Sign up
