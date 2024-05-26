@@ -13,7 +13,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 if (import.meta.env.VITE_GA_ID) {
   ReactGA.initialize(import.meta.env.VITE_GA_ID);
-} else {
+} else if (import.meta.env.PROD) {
   console.warn("WARN: VITE_GA_ID was not provided! Not setting up react-ga4");
 }
 
