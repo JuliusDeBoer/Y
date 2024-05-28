@@ -33,7 +33,7 @@ function Feed() {
       value.content = "";
       query.data?.items.unshift({
         ...newPost,
-        ...{ expand: { user: getProfile() } },
+        expand: { user: getProfile() },
       });
     },
   });
@@ -99,7 +99,7 @@ function Feed() {
           <hr className="my-4" />
           <Stack spacing={2}>
             {query.data?.items.map((p) => (
-              <Link to="/post/$id" params={{ id: p.id }}>
+              <Link key={p.id} to="/post/$id" params={{ id: p.id }}>
                 <Post user={p.expand.user} post={p} key={p.id} />
               </Link>
             ))}

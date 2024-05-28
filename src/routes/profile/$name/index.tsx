@@ -92,7 +92,7 @@ function Profile() {
         </div>
         <Stack spacing={2}>
           {postsQuery.data?.items.map((p) => (
-            <Link to="/post/$id" params={{ id: p.id }}>
+            <Link key={p.id} to="/post/$id" params={{ id: p.id }}>
               <Post user={profile} post={p} key={p.id} />
             </Link>
           ))}

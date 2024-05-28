@@ -100,32 +100,35 @@ function Form() {
               v.excludes(" ", "Cannot contain spaces"),
             ]),
           }}
-          children={(field) => (
+        >
+          {(field) => (
             <Field field={field} type="text" error={error?.username?.message} />
           )}
-        />
+        </form.Field>
         <form.Field
           name="email"
           validators={{
             onBlur: v.string([v.email("Must be a valid email")]),
           }}
-          children={(field) => (
+        >
+          {(field) => (
             <Field field={field} type="email" error={error?.email?.message} />
           )}
-        />
+        </form.Field>
         <form.Field
           name="password"
           validators={{
             onBlur: v.string([v.minLength(8, "Must be at least 8 characters")]),
           }}
-          children={(field) => (
+        >
+          {(field) => (
             <Field
               field={field}
               type="password"
               error={error?.password?.message}
             />
           )}
-        />
+        </form.Field>
         <div className="w-full flex justify-center items-center">
           <LoadingButton loading={loading} variant="contained" type="submit">
             Sign up

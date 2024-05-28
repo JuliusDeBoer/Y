@@ -86,15 +86,17 @@ function Form() {
           validators={{
             onBlur: v.string([v.email("Must be a valid email")]),
           }}
-          children={(field) => <Field field={field} type="email" />}
-        />
+        >
+          {(field) => <Field field={field} type="email" />}
+        </form.Field>
         <form.Field
           name="password"
           validators={{
             onBlur: v.string([v.minLength(8, "Must be at least 8 characters")]),
           }}
-          children={(field) => <Field field={field} type="password" />}
-        />
+        >
+          {(field) => <Field field={field} type="password" />}
+        </form.Field>
         <div className="w-full flex justify-center items-center">
           <LoadingButton loading={loading} variant="contained" type="submit">
             Login
