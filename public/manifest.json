@@ -6,7 +6,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
-  "start_url": "/login",
+  "start_url": "/feed",
   "icons": [
     {
       "src": "pwa/SmallTile.scale-100.png",
