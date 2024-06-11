@@ -22,9 +22,6 @@ import { Route as ProfileNameIndexImport } from "./routes/profile/$name/index";
 const SignUpLazyImport = createFileRoute("/sign-up")();
 const LoginLazyImport = createFileRoute("/login")();
 const IndexLazyImport = createFileRoute("/")();
-const ProfileNameSettingsLazyImport = createFileRoute(
-  "/profile/$name/settings",
-)();
 
 // Create/Update Routes
 
@@ -57,13 +54,6 @@ const ProfileNameIndexRoute = ProfileNameIndexImport.update({
   path: "/profile/$name/",
   getParentRoute: () => rootRoute,
 } as any);
-
-const ProfileNameSettingsLazyRoute = ProfileNameSettingsLazyImport.update({
-  path: "/profile/$name/settings",
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import("./routes/profile/$name/settings.lazy").then((d) => d.Route),
-);
 
 // Populate the FileRoutesByPath interface
 
@@ -104,13 +94,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof PostIdImport;
       parentRoute: typeof rootRoute;
     };
-    "/profile/$name/settings": {
-      id: "/profile/$name/settings";
-      path: "/profile/$name/settings";
-      fullPath: "/profile/$name/settings";
-      preLoaderRoute: typeof ProfileNameSettingsLazyImport;
-      parentRoute: typeof rootRoute;
-    };
     "/profile/$name/": {
       id: "/profile/$name/";
       path: "/profile/$name";
@@ -129,7 +112,6 @@ export const routeTree = rootRoute.addChildren({
   LoginLazyRoute,
   SignUpLazyRoute,
   PostIdRoute,
-  ProfileNameSettingsLazyRoute,
   ProfileNameIndexRoute,
 });
 
@@ -146,7 +128,6 @@ export const routeTree = rootRoute.addChildren({
         "/login",
         "/sign-up",
         "/post/$id",
-        "/profile/$name/settings",
         "/profile/$name/"
       ]
     },
@@ -164,9 +145,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/post/$id": {
       "filePath": "post/$id.tsx"
-    },
-    "/profile/$name/settings": {
-      "filePath": "profile/$name/settings.lazy.tsx"
     },
     "/profile/$name/": {
       "filePath": "profile/$name/index.tsx"

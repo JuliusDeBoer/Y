@@ -9,8 +9,7 @@ import {
   useQuery,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { Avatar, IconButton, Stack, Typography } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Avatar, Stack, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
 import Post from "@/components/Post";
 
@@ -44,23 +43,14 @@ function Profile() {
     throw query.error;
   }
 
-  const profile = query.data as any;
+  const profile = getProfile() as any;
 
   const postsQuery = useQuery({
     queryKey: ["PostsForUser"],
     queryFn: () => getPostsOfUser(profile.id),
   });
 
-  let authenticatedUser: any;
-  try {
-    authenticatedUser = getProfile();
-  } catch {
-    authenticatedUser = undefined;
-  }
-
   document.title = `Profile of ${profile.name} / Y`;
-
-  const isOwnProfile = profile.id == (authenticatedUser.id ?? -1);
 
   return (
     <>
@@ -74,20 +64,7 @@ function Profile() {
           <Avatar sx={{ width: 128, height: 128 }}>{profile.name[0]}</Avatar>
           <div>
             <h3 className="text-2xl">{profile.name}</h3>
-            <Typography variant="body1">
-              {profile.description}
-              {isOwnProfile ? (
-                <IconButton
-                  component={Link}
-                  to="./settings"
-                  aria-label="delete"
-                >
-                  <EditIcon />
-                </IconButton>
-              ) : (
-                <></>
-              )}
-            </Typography>
+            <Typography variant="body1">{profile.description}</Typography>
           </div>
         </div>
         <Stack spacing={2}>
