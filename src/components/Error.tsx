@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { ErrorComponentProps, Link } from "@tanstack/react-router";
 import internalServerErrorImage from "@/assets/500 InternalServerError.png";
 
@@ -10,7 +10,9 @@ export default function Error({ reset }: ErrorComponentProps) {
         alt="500 Internal Server Error"
         width="500"
       />
-      <h1 className="text-3xl">Oops! Something went wrong</h1>
+      <Typography variant="h4" component="h1">
+        Oops! Something went wrong
+      </Typography>
       <Button component={Link} onClick={reset} to="/">
         Return home
       </Button>

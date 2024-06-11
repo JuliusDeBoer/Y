@@ -1,19 +1,11 @@
 import { defineConfig } from "vite";
-import { preact } from "@preact/preset-vite";
+import react from "@vitejs/plugin-react";
 import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
 import { fileURLToPath } from "url";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    preact(),
-    TanStackRouterVite({
-      enableRouteGeneration: true,
-      experimental: {
-        enableCodeSplitting: true,
-      },
-    }),
-  ],
+  plugins: [react(), TanStackRouterVite()],
   build: {
     sourcemap: true,
   },

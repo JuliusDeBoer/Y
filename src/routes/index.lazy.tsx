@@ -2,6 +2,7 @@ import { isAuthenticated } from "@/services/pocketbase";
 import { Navigate, createLazyFileRoute } from "@tanstack/react-router";
 import logo from "@/assets/logo.svg";
 import { Helmet } from "react-helmet";
+import { Typography } from "@mui/material";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -19,9 +20,9 @@ function Index() {
       </Helmet>
       <div className="w-full h-full flex flex-col justify-center items-center container mx-auto">
         <img src={logo} width="128" />
-        <h1 className="text-5xl">
+        <Typography variant="h2" component="h1" className="text-center">
           The new social media platform that makes you ask: "why?"
-        </h1>
+        </Typography>
       </div>
     </>
   );

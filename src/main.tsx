@@ -1,9 +1,9 @@
-import "preact/debug";
+import { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import Error from "@/components/Error";
 import NotFound from "@/components/NotFound";
 import Loading from "@/components/Loading";
-import { render } from "preact";
 
 import { connect } from "@/services/pocketbase";
 
@@ -39,10 +39,12 @@ connect();
 
 const rootElement = document.getElementById("app")!;
 if (!rootElement.innerHTML) {
-  render(
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>,
-    rootElement,
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </StrictMode>,
   );
 }
