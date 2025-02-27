@@ -8,7 +8,7 @@ export default function SignUpForm() {
   const [loading, setLoading] = useState(false);
 
   const checkUsername = () => {
-    actions.handleAvailable(handle ?? "").then((available) => {
+    actions.handleAvailable(handle).then((available) => {
       if (available) {
         console.log("Username available!");
       } else {
@@ -22,9 +22,9 @@ export default function SignUpForm() {
     e.preventDefault();
 
     const { error } = await actions.signUp({
-      handle: handle ?? "",
-      email: email ?? "",
-      password: password ?? "",
+      handle: handle,
+      email: email,
+      password: password,
     });
 
     if (error) {
