@@ -3,4 +3,7 @@
 @theme {
     --color-light-text: var(--color-slate-950);
     --color-light-bg: var(--color-violet-100);
+
+    --color-dark-text: var(--color-pink-200);
+    --color-dark-bg: var(--color-slate-950);
 }
