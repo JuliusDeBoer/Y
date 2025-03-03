@@ -26,6 +26,17 @@ export default defineConfig({
         "react-dom/server": "react-dom/server.edge",
       },
     },
+    ssr: {
+      external: [
+        "path",
+        "fs",
+        "os",
+        "child_process",
+        "crypto",
+        "stream",
+        "assert",
+      ],
+    },
   },
 
   integrations: [react(), db()],

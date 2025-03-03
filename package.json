@@ -1,40 +1,40 @@
 {
-	"name": "y-app",
-	"type": "module",
-	"version": "0.0.1",
-	"scripts": {
-		"dev": "astro dev",
-		"build": "astro build",
-		"preview": "astro build && wrangler pages dev",
-		"astro": "astro",
-		"deploy": "astro build && wrangler pages deploy",
-		"cf-typegen": "wrangler types"
-	},
-	"dependencies": {
-		"@astrojs/cloudflare": "^12.2.2",
-		"@astrojs/db": "^0.14.6",
-		"@astrojs/react": "^4.2.0",
-		"@tailwindcss/vite": "^4.0.8",
-		"@types/react": "^19.0.10",
-		"@types/react-dom": "^19.0.4",
-		"astro": "^5.3.1",
-		"bcrypt": "^5.1.1",
-		"node-gyp": "^11.1.0",
-		"react": "^19.0.0",
-		"react-dom": "^19.0.0",
-		"tailwindcss": "^4.0.8"
-	},
-	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20250224.0",
-		"@types/bcrypt": "^5.0.2",
-		"wrangler": "^3.109.3"
-	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"bcrypt",
-			"esbuild",
-			"sharp",
-			"workerd"
-		]
-	}
+  "name": "y-app",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro build --remote && wrangler pages dev",
+    "astro": "astro",
+    "deploy": "astro build && wrangler pages deploy",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.2.2",
+    "@astrojs/db": "^0.14.6",
+    "@astrojs/react": "^4.2.0",
+    "@tailwindcss/vite": "^4.0.8",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "astro": "^5.3.1",
+    "bcrypt": "^5.1.1",
+    "node-gyp": "^11.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250224.0",
+    "@types/bcrypt": "^5.0.2",
+    "wrangler": "^3.109.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "bcrypt",
+      "esbuild",
+      "sharp",
+      "workerd"
+    ]
+  }
 }
