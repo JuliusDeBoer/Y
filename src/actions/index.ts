@@ -35,13 +35,15 @@ export const server = {
         .refine((h) => !h.includes(" ")),
     }),
     handler: (input) => {
-      db.insert(User).values({
-        id: crypto.randomUUID(),
-        name: input.handle,
-        handle: input.handle,
-        email: input.email,
-        password: bcrypt.hashSync(input.password, 10),
-      });
+      db.insert(User)
+        .values({
+          id: crypto.randomUUID(),
+          name: input.handle,
+          handle: input.handle,
+          email: input.email,
+          password: bcrypt.hashSync(input.password, 10),
+        })
+        .run();
     },
   }),
 };

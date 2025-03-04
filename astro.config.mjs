@@ -21,11 +21,13 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
-    resolve: {
-      alias: {
-        "react-dom/server": "react-dom/server.edge",
-      },
-    },
+    resolve: import.meta.env.DEV
+      ? {}
+      : {
+          alias: {
+            "react-dom/server": "react-dom/server.edge",
+          },
+        },
     ssr: {
       external: [
         "path",
