@@ -26,7 +26,6 @@ export default defineConfig({
       : {
           alias: {
             "react-dom/server": "react-dom/server.edge",
-            "node:fs": "fs",
           },
         },
     ssr: {
