@@ -31,21 +31,11 @@ export default defineConfig({
         },
     ssr: {
       external: [
-        "assert",
-        "buffer",
-        "crypto",
-        "dns",
-        "net",
-        "path",
-        "process",
-        "streams",
-        "test",
-        "timers",
-        "url",
-        "util",
-        "zlib",
 	"node:fs",
       ],
+    },
+    optimizeDeps: {
+      exclude: ["astro:db"],
     },
   },
 
