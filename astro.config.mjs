@@ -17,6 +17,7 @@ export default defineConfig({
     platformProxy: {
       enabled: true,
     },
+    imageService: "cloudflare",
   }),
 
   vite: {
@@ -28,6 +29,24 @@ export default defineConfig({
             "react-dom/server": "react-dom/server.edge",
           },
         },
+    ssr: {
+      external: [
+        "assert",
+        "buffer",
+        "crypto",
+        "dns",
+        "net",
+        "path",
+        "process",
+        "streams",
+        "test",
+        "timers",
+        "url",
+        "util",
+        "zlib",
+	"node:fs",
+      ],
+    },
   },
 
   integrations: [react(), db()],
